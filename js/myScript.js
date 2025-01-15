@@ -4,23 +4,36 @@ function toggleMenu() {
 }
 
 
+// Example using jQuery AJAX to send the form data
 $(document).ready(function() {
-    $("#contactForm").on("submit", function(e) {
-        e.preventDefault();
+    $("#contactForm").submit(function(e) {
+        e.preventDefault();  // Prevent the default form submission
+
+        var formData = {
+            name: $("#name").val(),
+            email: $("#email").val(),
+            message: $("#message").val()
+        };
 
         $.ajax({
-            url: "https://ralphanthonymabao.github.io/send_email.php",
+            url: "https://ralphanthonymabao.github.io/send_email.php",  // Update the URL to your PHP script
             type: "POST",
-            data: $(this).serialize(),
+            contentType: "application/json",  // Sending data as JSON
+            data: JSON.stringify(formData),  // Convert form data to JSON
             success: function(response) {
-                $(".status").text("Message sent successfully!").css("color", "green").fadeIn();
-                $("#contactForm")[0].reset();
+                // Handle the response
+                var res = JSON.parse(response);
+                if (res.status == "success") {
+                    alert(res.message);  // Show success message
+                } else {
+                    alert(res.message);  // Show error message
+                }
             },
-            error: function() {
-                $(".status").text("An error occurred. Please try again.").css("color", "red").fadeIn();
+            error: function(xhr, status, error) {
+                // Handle error
+                console.error("Error: " + xhr.status + " " + xhr.statusText);
             }
         });
     });
 });
-
 
