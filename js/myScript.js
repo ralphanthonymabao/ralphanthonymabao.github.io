@@ -9,7 +9,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         $.ajax({
-            url: "send_email.php", // PHP script for email
+            url: "https://ralphanthonymabao.github.io/send_email.php",
             type: "POST",
             data: $(this).serialize(),
             success: function(response) {
@@ -22,3 +22,5 @@ $(document).ready(function() {
         });
     });
 });
+
+
